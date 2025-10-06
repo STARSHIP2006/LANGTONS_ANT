@@ -1,54 +1,59 @@
-# Langton's Ant — Simulation & Visualizer
+# Langton's Ant — Simulation, Visualizer & Pheromone-Enhanced Variants
 
-A compact, configurable implementation of **Langton’s Ant** — the simple Turing-like cellular automaton that produces surprisingly complex behaviour from very small rules.  
-This README is a ready-to-paste, all-purpose `README.md` you can drop into the repository. It intentionally uses no logos or badges.
+A compact, configurable implementation of **Langton’s Ant** extended with biological-inspired features such as **pheromone deposition & decay**, multi-ant interactions, configurable rulesets, and notebook-driven experiments. This README is ready to paste into your repository and intentionally contains no logos or image badges.
 
 ---
 
 ## Overview
 
-Langton’s Ant is a 2D grid automaton where one or more "ants" move on a grid of colored cells. Each ant follows simple rules:
-
-1. At each time step the ant **reads** the color of the cell it is standing on.
-2. Based on the color it **turns** (e.g. left or right), **flips** the color of the cell, and then **moves forward** one cell.
-3. Repeat.
-
-Despite the simplicity, the system can show chaotic patterns and, after many steps, a characteristic emergent "highway" pattern.
-
 This project provides:
-- A readable implementation of the rules (single and multi-ant).
-- A simple CLI to run simulations.
-- Options for ASCII, PNG frame, and GIF output.
-- Easy hooks for experimenting with custom rule sets (multi-color automata).
+- A straightforward Langton’s Ant simulator (single- and multi-ant).
+- An extended variant with **pheromone trails**: ants deposit pheromone as they move, pheromone **decays** over time, and ants can **sense** and bias movement by local pheromone concentrations.
+- Utilities for ASCII, PNG frame, and GIF output.
+- A Jupyter notebook (`Task 1.ipynb`) with examples, visualizations and experiments demonstrating pheromone dynamics, parameter sweeps, and analysis plots.
+
+Together these let you explore emergent behavior from (1) the classical two-state rule and (2) biologically-inspired foraging behaviors that use pheromone signalling.
 
 ---
 
-## Features
+## Key Features
 
-- Single and multiple ants.
-- Configurable grid size, steps, and initial conditions.
-- Custom turn rules (e.g. `"RL"`, `"LRR"`, or extended multi-color rules).
-- Output options:
-  - Terminal / ASCII preview
-  - Sequence of PNG frames
-  - Animated GIF
-- Lightweight, dependency-minimal by default; optional libraries for image/GIF output.
+### Classical Langton’s Ant
+- Standard two-color rule (`"RL"`) and multi-color generalization (e.g. `"RRL"`, `"LRR"`).
+- Single or multiple ants on a shared grid.
+- Configurable grid size, start positions, and directions.
+
+### Pheromone System (included in `Task 1.ipynb`)
+- **Pheromone deposition:** each ant deposits an amount of pheromone on the cell it leaves or visits.
+- **Pheromone decay:** pheromone values on the grid decay each time step by a configurable decay factor.
+- **Pheromone sensing:** ants can sample neighboring cells and choose turns probabilistically biased by pheromone strength.
+- **Stochastic behavior:** turn decisions can use a probability distribution combining rule-based turning and pheromone attraction (temperature/noise parameter).
+- **Parameterizable**: deposition amount, decay rate, diffusion coefficient, sensing radius, and stochasticity.
+
+### IO & Visualization
+- Terminal ASCII preview for quick checks.
+- Export frames (PNG) and generate animated GIFs.
+- Notebook plots (matplotlib) tracking pheromone statistics, ant trajectories, and pattern emergence.
+
+### Experiments & Analysis
+- `Task 1.ipynb` contains:
+  - Example configurations (classic, pheromone-guided, multi-ant).
+  - Parameter sweeps (decay vs deposition) and result visualizations.
+  - Metrics collected: pheromone total, entropy of grid, cluster detection, and mean-squared displacement of ants.
 
 ---
 
-## Quick start
+## Requirements
 
-> The examples below assume a Python implementation named `langtons_ant.py`. If your main file or language differs, adapt the commands accordingly.
+- Python 3.8+
+- Recommended packages (for Notebook & visualization):
+  - `numpy`
+  - `matplotlib`
+  - `pillow` (optional, for PNGs)
+  - `imageio` (optional, for GIFs)
+  - `jupyter` / `notebook` (to run `Task 1.ipynb`)
 
-### Requirements
-
-- Python 3.8+ (if using the included Python implementation)
-- Optional (for image/GIF output):
-  - `Pillow` (`pip install Pillow`)
-  - `imageio` (`pip install imageio`)
-
-### Install
+Install with pip:
 
 ```bash
-git clone https://github.com/<your-username>/LANGTONS_ANT.git
-cd LANGTONS_ANT
+pip install numpy matplotlib pillow imageio jupyter
